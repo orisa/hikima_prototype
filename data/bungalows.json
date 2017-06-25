@@ -1,0 +1,17 @@
+[
+    {
+        "name": "suda+house",        
+        "title": "suda house",
+        "LGA": "Arkilla",
+        "status": "Available",
+        "category": "Bungalows"  
+    },
+
+    {   
+        "name": "seriki+house",
+        "title": "seriki house",
+        "LGA": "Bello Way",
+        "status": "Available",
+        "category": "Bungalows"
+    }
+]

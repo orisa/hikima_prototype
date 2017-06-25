@@ -39,12 +39,160 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer({
         is: 'hikima-category-data',
         properties: {
+          
           categories: {
             type: Array,
             value: data,
             readOnly: true,
             notify: true,
+          },
+          subroute:{
+            type: Object,
+             observer: '_subrouteChanged'
+          },
+
+          items: {
+            type: Array,
+            observer: '_showItems',
+          },
+
+          categoryObj: {
+            type: Object,
+          },
+
+          page: String,
+                   
+        },
+         
+       
+         _computePathNames: function(path) {
+            let buffer = "";
+           let data = [];
+           if (path) {
+             
+              let seperator = '/';
+              path = path.substr(1);
+              for (let char of path) {
+                if (char != seperator) {
+                    buffer += char;
+                }else {
+                    data.push(buffer);
+                    buffer = "";
+                }
+              } 
+              data.push(buffer);
+              return data;
+           }
+         },
+
+        _computePattern: function(page) {
+          if (page) {
+            if (page == 'list') {
+              return "/:category";
+            }
           }
+        },
+        _getCategoryObject: function(categoryName) {
+           for (var i = 0, c; c = data[i]; ++i) {
+              if (c.name === categoryName) {
+                return c;
+              }
+           }
+        },
+
+        _subrouteChanged: function(subroute) {
+          let pathNames = [];
+          if (subroute.path) {
+               pathNames = this._computePathNames(subroute.path);                
+          }
+            if (pathNames.length != 0) {
+                if (this.page == 'list') {
+                    const categoryName = pathNames[0];
+                    console.log(categoryName);
+                    if (categoryName) {
+                      const categoryObj = this._getCategoryObject(categoryName);
+                      this._fetchItems(categoryObj, 1);
+                      //this.set('categoryObj', obj);
+                    }
+                } else if (this.page == 'detail') {
+                  console.log("In detail page");
+                   const categoryName = pathNames[0];
+                   const itemName = pathNames[1];                   
+                   //console.log(categoryName);
+                   //console.log(itemName);                   
+                    if (categoryName) {
+                      this._fetchItemDetail(categoryName, itemName, 1);
+                      //this.set('categoryObj', obj);
+                    }
+                }  
+            }
+          
+        },
+
+        _computeItem: function(itemName, items) {
+            for (let item of items) {
+                if (item.name == itemName) {
+                  return item;
+                }
+            }
+        },
+
+         _getResource: function(rq, attempts) {
+        var xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', rq.onLoad.bind(this));
+        xhr.addEventListener('error', function(e) {
+          // Flaky connections might fail fetching resources
+          if (attempts > 1) {
+            this.debounce('_getResource', this._getResource.bind(this, rq, attempts - 1), 200);
+          } else {
+            rq.onError.call(this, e);
+          }
+        }.bind(this));
+
+        xhr.open('GET', rq.url);
+        xhr.send();
+      },
+
+      _fetchItemDetail: function(categoryName, itemName, attempts) {
+          if (categoryName && itemName) {
+               this._getResource({
+                  url: '/data/' + categoryName + '.json',
+                  onLoad: function(e) {
+                    //this.set('items', JSON.parse(e.target.responseText));
+                    const items = JSON.parse(e.target.responseText);
+                    const detailObj = this._computeItem(itemName, items);
+                    this.fire('item-ready',  {detailObj,failure: false})
+                  },
+                  onError: function(e) {
+                    this.fire({ failure: true});
+                  }
+                }, attempts);
+          }
+      },
+
+        _fetchItems: function(categoryObj, attempts) {
+         // Only fetch the items of a category if it has not been previously set.
+       
+         if (!categoryObj || categoryObj.items) {
+           return;
+         }
+
+         this._getResource({
+          url: '/data/' + categoryObj.name + '.json',
+          onLoad: function(e) {
+            //this.set('items', JSON.parse(e.target.responseText));
+            categoryObj.items = JSON.parse(e.target.responseText);
+            this.fire('items-ready',  {categoryObj, failure: false})
+           },
+          onError: function(e) {
+             this.fire({ failure: true});
+          }
+        }, attempts);
+       },
+
+        _showItems: function(items) {
+          console.dir(items);
+                
         }
       });
       

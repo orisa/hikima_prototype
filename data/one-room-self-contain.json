@@ -1,0 +1,49 @@
+[
+    {
+        "name": "Suda+House",        
+        "title": "Suda House",
+        "LGA": "Arkilla",
+        "Region": "Sokoto South",
+        "status": "Available",
+        "category": "one_room_self_contain", 
+        "price": 45000,
+        "description": "Located in Arkilla, this one room self contain is comfortable and affordable",
+        "image": "/data/images/demo_house.jpg"
+    },
+
+    {   
+        "name": "Seriki+House",
+        "title": "Seriki House",
+        "LGA": "Bello Way",
+        "Region": "Sokoto Nouth",        
+        "status": "Available",
+        "category":  "one_room_self_contain", 
+        "price": 40000,
+        "description": "Located in Bello Way, this one room self contain is comfortable and affordable",
+        "image": "/data/images/demo_house.jpg"        
+    },
+
+    {   
+        "name": "Jinadu+House",
+        "title": "Jinadu House",
+        "LGA": "Mabera",
+        "Region": "Sokoto South",        
+        "status": "Not Available",
+        "category":  "one_room_self_contain", 
+        "price": 30000,
+        "description": "Located in Bello Way, this one room self contain is comfortable and affordable",
+        "image": "/data/images/demo_house.jpg"        
+    },
+
+     {   
+        "name": "Alhaji+A+house",
+        "title": "Alhaji A House",
+        "LGA": "Kofar Rini",
+        "Region": "Sokoto North",        
+        "status": "Available",
+        "category":  "one_room_self_contain", 
+        "price": 20000,
+        "description": "Located in Bello Way, this one room self contain is comfortable and affordable",
+        "image": "/data/images/demo_house.jpg"        
+    }
+]
