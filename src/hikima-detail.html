@@ -9,7 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="shared-styles.html">
+
+<link rel="import" href="hikima-icons.html">
 
 <dom-module id="hikima-detail">
   <template>
@@ -17,19 +20,130 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
 
-        padding: 10px;
+         position: relative;
       }
-    </style>
 
-    <div class="card">
-      <div class="circle">3</div>
-      <h1>View Three</h1>
-      <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
-    </div>
-    <p>[[detailObj.title]]</p>
-    <p>[[detailObj.LGA]]</p>
-    <p>[[detailObj.status]]</p>
+      *:not(paper-icon-button){
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        outline: 0;
+      }
+
+      .listing-detail ul {
+        list-style-type: none;
+      }
+
+      /***** css created content items *****/
+
+      .reasons {
+        border-top: 1px solid #757575;
+        border-bottom: 1px solid #757575;        
+      }
+
+     .listing-detail {
+       background-color: white;
+       border-radius: 9px;
+     }      
+
+     
+
+       .summary .label,
+       .reasons p,
+       .about p:nth-of-type(1){
+         font-size: 14px;
+         font-weight: 600;
+       }
+
+       .summary .category, 
+       .summary .bedrooms,
+       .summary .price {
+         font-size: 16px;
+       }
+
+       .reasons li {
+         font-size: 14px;
+       }
+
+       .about p:nth-of-type(2) {
+         font-size: 13px;
+       }
+
+       /********** Layout **********/
+
+       .listing-img img {
+         width: 100%;
+         height: 49vh;
+       }
+
+       .listing-detail {
+         position: absolute;
+         margin-top: -10%;
+         margin-left: 5%;
+         width: 90%;
+         }
+
+        paper-icon-button {
+         --paper-icon-button: {
+           background-color: #333333;
+           border-radius: 100%;
+           position: absolute;
+           z-index: 5;
+         };
+       }
+
+        .msg {
+            top: 85%;
+            left: 10%;
+         
+       }
+
+       .tel {
+            top: 85%;
+            right: 10%;
+         
+       }
+
+
+    
+ 
+       
+    </style>
+      <h1>[[detailObj.title]]</h1>
+      <div class="listing-img">
+          <img src="[[detailObj.image]]" alt="[[detailObj.title]]">
+      </div>
+      <paper-icon-button  class="msg" icon="hikima-icons:chevron-right"></paper-icon-button>
+      <paper-icon-button class="tel" icon="hikima-icons:chevron-right"></paper-icon-button>
+      <div class="listing-detail">
+        <div class="summary">
+          <div>
+            <p class="label">Category</p>
+            <p class="category">[[detailObj.category_title]]</p>
+          </div>
+          <div>
+            <p class="label">Bedrooms</p>
+            <p class="bedrooms">[[detailObj.bedrooms]]</p>
+          </div>
+           <div>
+            <p class="label">Price</p>
+            <p class="price">[[detailObj.price]]</p>
+          </div>
+        </div>
+        <div class="reasons">
+          <p>Reasons Why Clients Choose this place:</p>
+          <ul>
+            <li>[[detailObj.reason_1]]</li>
+            <li>[[detailObj.reason_2]]</li>
+            <li>[[detailObj.reason_3]]</li>
+            <li>[[detailObj.reason_4]]</li>                                    
+          </ul>
+        </div>
+        <div class="about">
+          <p>About This Place</p>
+          <p>[[detailObj.description]]</p>
+        </div>
+      </div>
   </template>
 
   <script>
