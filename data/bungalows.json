@@ -1,17 +1,35 @@
 [
     {
-        "name": "suda+house",        
-        "title": "suda house",
+        "bedrooms": 4,
+        "name": "jaka+house",        
+        "title": "jaka house",
         "LGA": "Arkilla",
         "status": "Available",
-        "category": "Bungalows"  
+        "region": "Sokoto East",
+        "category": "Bungalows",
+        "category_title": "Bungalows",
+        "price": 145000,
+        "description": "Located in Arkilla, this one room self contain is comfortable and affordable",
+        "image": "/data/images/demo_house.jpg",
+        "reason_1": "Power Supply",
+        "reason_2": "Market Proximity",
+        "reason_3": "Water",
+        "reason_4": "Security"   
     },
 
     {   
+        "bedrooms": 3,        
         "name": "seriki+house",
         "title": "seriki house",
         "LGA": "Bello Way",
         "status": "Available",
-        "category": "Bungalows"
+        "region": "Sokoto West",
+        "category": "Bungalows",
+        "description": "Located in along trade fair road, this one room self contain is comfortable and affordable",
+        "image": "/data/images/demo_house.jpg",
+        "reason_1": "Power Supply",
+        "reason_2": "Market Proximity",
+        "reason_3": "Water",
+        "reason_4": "Security" 
     }
 ]

@@ -74,7 +74,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
     
-    <hikima-category-data categories="{{categories}}" subroute="[[subroute]]" page="[[page]]"></hikima-category-data>
+    <hikima-category-data categories="{{categories}}"
+                          search-criterion-name="{{searchCriterionName}}" 
+                          subroute="[[subroute]]" page="[[page]]"></hikima-category-data>
     
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
@@ -107,6 +109,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         listings-category="[[listingsCategory]]"
                         failure="[[failure]]"></hikima-list>
           <hikima-detail name="detail" detail-obj="[[detailObj]]"></hikima-detail>
+          <hikima-search></hikima-search>          
           <hikima-view404 name="view404"></hikima-view404>
         </iron-pages>
       </app-header-layout>
@@ -125,6 +128,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
         categories: Array,
+        query: String,
+        searchResults: Array,
+        searchCriterionName: String,
         listingsCategory: Object,
         failure: Boolean,
         detailObj: Object
@@ -133,12 +139,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       listeners: {
         'items-ready': '_onItemsReady',
         'item-ready': '_onItemReady',
+        'all-items-ready': '_onAllItemsReady'
        },
 
       observers: [
         '_routePageChanged(routeData.page)',
          
       ],
+
+      _onKeyUp: function(e) {
+        this.set('searchCriterionName', 'all');
+      },
 
       _routePageChanged: function(page) {
         this.page = page || 'home';
@@ -168,17 +179,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _onItemReady: function(e) {
         if (!e.detail.failure) {
            this.set('detailObj', e.detail.detailObj);
-           console.dir(e.detail.detailObj);          
-        }
+         }
         this.set('failure', e.detail.failure);
       },
-
-      _onCategoriesDataReady: function(e) {
-        if (e.detail) {
-         // console.dir(e.detail.categories);
-          this.set('categories', e.detail.categories);
-        }
-      },
+      
+      _onAllItemsReady: function(e) {
+         if (!e.detail.failure) {
+           this.set('searchResults', e.detail.items);
+           this.set('query', 'suda house');
+         }
+        this.set('failure', e.detail.failure);
+      }
 
       
     });

@@ -1,0 +1,40 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="hikima-search">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+    </style>
+
+    <div class="card">
+      <div class="circle">1</div>
+      <h1>Search Results</h1>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'hikima-search',
+
+      properties: {
+          failure: Boolean,
+
+          searchResults: {
+              type: Array,
+          },
+
+          query: String,
+      },
+
+      observers: [
+      ],
+
+
+    });
+  </script>
+</dom-module>

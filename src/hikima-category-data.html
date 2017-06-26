@@ -60,8 +60,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: Object,
           },
 
+          searchCriterionName: {
+            type: String,
+            observer: 'getSearchData',
+          },
+
           page: String,
                    
+        },
+
+
+        getSearchData: function(criterionName) {
+            if (criterionName) {
+              this._fetchAllItems(criterionName, 1);
+            }
         },
          
        
@@ -170,6 +182,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
       },
 
+       _fetchSearchResults: function(query, criterionName, attempts) {
+           if (criterionName) {
+                this._getResource({
+                  url: '/data/' + criterionName + '.json',
+                  onLoad: function(e) {
+                    const response = JSON.parse(e.target.responseText);
+                    this.searchListings(query, response);
+                   // this.fire('search-results-ready',  {searchResults,failure: false})
+                  },
+                  onError: function(e) {
+                    this.fire({ failure: true});
+                  }
+                }, attempts);
+           }
+      },
+
         _fetchItems: function(categoryObj, attempts) {
          // Only fetch the items of a category if it has not been previously set.
        
@@ -190,10 +218,100 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }, attempts);
        },
 
-        _showItems: function(items) {
-          console.dir(items);
+       searchListings: function(query, response) {
+          if (query && response) {
+                let found = false;
+                let match_listings = [];
+                const formattedQuery = query.trim().toLowerCase();
+
+                const listingsByName = response.filter(function(listing) {
+                     // find listings by title
+                    const formattedTitle = listing.title.trim().toLowerCase();
+                    return formattedTitle.indexOf(formattedQuery) > -1;
+                });
+
+                if (listingsByName.length != 0) {
+                  for (const listing of listingsByName) {
+                    match_listings.push(listing)
+                  }
+                }
+
+                 // find listings by lga
+                  const listingsBylga = response.filter(function(listing) {
+                     // find listings by title
+                    const formattedLga = listing.LGA.trim().toLowerCase();
+                    return formattedLga.indexOf(formattedQuery) > -1;
+                });
+
+                 if (listingsBylga.length != 0) {
+                  for (const listing of listingsBylga) {
+                    match_listings.push(listing)
+                  }
+                }
+                 // find listings by region
+                    const listingsByRegion = response.filter(function(listing) {
+                     // find listings by title
+                    const formattedRegion = listing.region.trim().toLowerCase();
+                    return formattedRegion.indexOf(formattedQuery) > -1;
+                });
+
+                 if (listingsByRegion.length != 0) {
+                  for (const listing of listingsByRegion) {
+                    match_listings.push(listing)
+                  }
+                }
+
+                console.dir(match_listings);
+          }
+         
                 
+        },
+        
+        // it should fetch listings that match user query given the user query and criterion for search 
+        _fetchSearchResultsTester: function() {
+            if (false) {
+               let query = 'suda house';
+                let criterionName = 'all';
+                this._fetchSearchResults(query, criterionName,  1);
+            }
+            // it should return match listing if query is an lga
+            if (false) {
+                let query = 'arkilla';
+                let criterionName = 'all';
+                this._fetchSearchResults(query, criterionName,  1);
+
+                query = 'belloway';
+                criterionName = 'all';
+                this._fetchSearchResults(query, criterionName,  1);
+
+                // lga w/ spaces
+                query = 'bello way';
+                criterionName = 'all';
+                this._fetchSearchResults(query, criterionName,  1);
+            }
+
+            // it should return match listing if query is a region
+            if (true) {
+               let query = 'sokoto south';
+                let criterionName = 'all';
+                this._fetchSearchResults(query, criterionName,  1);
+
+                query = 'sokoto north';
+                criterionName = 'all';
+                this._fetchSearchResults(query, criterionName,  1);
+
+                 query = 'sokoto east';
+                criterionName = 'all';
+                this._fetchSearchResults(query, criterionName,  1);
+
+                query = 'sokoto west';
+                criterionName = 'all';
+                this._fetchSearchResults(query, criterionName,  1);
+            }            
+
+            
         }
+
       });
       
     })();
