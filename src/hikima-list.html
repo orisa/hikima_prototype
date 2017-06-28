@@ -106,8 +106,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
      
     </style>
-    <h3>[[listingsCategory.title]]</h3>
-    <p>[[numListings]]&nbsp;Listings(s)</p>
+    <div hidden$="[[failure]]">
+      <h3>[[listingsCategory.title]]</h3>
+        <p>[[numListings]]&nbsp;Listings(s)</p>
+    </div> 
     <div hidden$="[[failure]]">
          <template is="dom-repeat" items="[[listingsCategory.items]]" as="listing">
             <a href$="/detail/[[listing.category]]/[[listing.name]]" class="listing-link">
@@ -123,7 +125,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </a>
          </template>
     </div>
-   
+    <div hidden$="[[!failure]]">
+      <h3>Unable to get data. Please Refresh</h3>
+    </div>
    </template>
 
   <script>

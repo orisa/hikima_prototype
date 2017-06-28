@@ -9,18 +9,99 @@
 
         padding: 10px;
       }
-    </style>
 
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>Search Results</h1>
+      *{
+        padding: 0;
+        margin: 0;
+        outline: none;
+      }
+
+       h3 {
+         text-align: center;
+         margin: 1% 0;
+       }
+
+       h3 + p{
+         font-size: 16px;
+         color: #757575;
+          text-align: center;
+       }
+
+       .listing-link {
+        text-decoration: none;
+      }
+
+      
+
+      .card {
+        letter-spacing: 1px;
+        line-height: 24px;
+
+        display: flex;
+        margin-left: 0;
+        margin-right: 0;
+        min-height: 128px;
+        padding: 16px;
+        justify-content: space-between;
+      }
+
+      .card .text-info {
+        flex-basis: 65%;
+      }
+
+      .card .title {
+        font-size: 24px;
+
+        color: #333333;        
+      }
+
+      .card .area{
+        font-size: 14px;
+        font-weight: 500;
+
+        margin-bottom: 12px;
+
+        color: #757575;        
+      }
+
+      .card .status-label {
+        font-size: 16px;
+
+        color: #333333;
+      }
+
+      .card .status {
+        font-size: 14px;
+        font-weight: 500;
+
+        color: #757575;
+      }
+
+      .card img {
+        width: 25vw;
+        height: 25vw;
+      }
+    </style>
+      <div hidden$="[[failure]]">
+          <h3>Search Results for <span class="query">[[query]]</span></h3>
+          <p>[[numListings]]&nbsp;Listings(s)</p>
+       </div> 
       <div hidden="[[failure]]">
           <template is="dom-repeat" items="[[searchResults]]" as="listing">
-            <p>[[listing.title]]</p>
-          </template>
+             <a href$="/detail/[[listing.category]]/[[listing.name]]" class="listing-link">
+                <div class="card">
+                  <div class="text-info">
+                    <p class="title">[[listing.title]]</p>
+                    <p class="area">[[listing.LGA]],&nbsp;[[listing.region]]</p> 
+                    <p class="status-label">Status</p>
+                    <p class="status">[[listing.status]]</p>                   
+                  </div>
+                  <img src="[[listing.image]]" alt="[[listing.title]]">
+                </div>
+            </a>
+           </template>
       </div>
-    </div>
-  </template>
+   </template>
 
   <script>
     Polymer({
@@ -34,10 +115,21 @@
           },
 
           query: String,
+
+          numListings: {
+          type: Number,
+          computed: '_computeNumListings(searchResults.splices)',
+        }
       },
 
       observers: [
       ],
+
+       _computeNumListings: function() {
+        if (this.searchResults) {
+            return this.searchResults.length;
+        }
+      }
 
 
     });
