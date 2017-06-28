@@ -21,14 +21,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
+<link rel="import" href="hikima-theme.html">
 <link rel="import" href="hikima-category-data.html">
 <link rel="import" href="hikima-icons.html">
 
 <dom-module id="hikima-app">
   <template>
-    <style>
+    <style include="hikima-theme">
       :host {
-        --app-primary-color: #4285f4;
+        --app-primary-color: var(--default-primary-color);
         --app-secondary-color: black;
 
         display: block;
@@ -36,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       app-header {
         color: #fff;
-        background-color: var(--app-primary-color);
+        background-color: var(--dark-primary-color);
       }
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
@@ -48,8 +49,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           height: 1.5em;
           border-radius: 5px;
           font-size: 1em;
-          background-color: white;
-          color: #757575;
+          background-color: (--text-primary-color);
+          color: var(--primary-text-color);
           outline: none;
           padding: 2px 5px;
           width: 100%;
@@ -61,15 +62,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        }
 
        .searchSignifier {
-          color: red;
+          color: var(--accent-color);
        }
 
          #searchinput::-webkit-input-placeholder {
-            color: #757575;
+            color: var(--secondary-text-color);
             letter-spacing: .5px;
             font-style: italic;
          }
 
+ 
       .drawer-list {
         margin: 0 20px;
       }
@@ -92,11 +94,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-decoration: none;
         font-size: 20px;
         font-weight: 500;
-        color: white;
+        color: var(--text-primary-color);
       }
 
       app-toolbar paper-icon-button {
-        color: white;
+        color: var(--text-primary-color);
+      }
+
+      .footer {
+        background-color: var(--dark-primary-color);
+          color: var(--text-primary-color);     
+      }
+
+       .socialContent {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 16px;
+      }
+      
+      .footer {
+          padding: 16px 0;
+      }
+      .footerInfo {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .footerInfo p {
+        margin-bottom: 1vh;
       }
     </style>
 
@@ -166,6 +192,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                          failure="[[failure]]"></hikima-search>          
           <hikima-view404 name="view404"></hikima-view404>
         </iron-pages>
+        <div class="footer" hidden$="[[hideFooter]]">
+          <div class="socialContent">
+            <paper-icon-button icon="hikima-icons:textsms"></paper-icon-button>
+            <paper-icon-button icon="hikima-icons:textsms"></paper-icon-button>
+            <paper-icon-button icon="hikima-icons:textsms"></paper-icon-button>
+            <paper-icon-button icon="hikima-icons:textsms"></paper-icon-button>                        
+          </div>
+          <div class="footerInfo">
+            <p>About</p>
+            <p>Copyright. Hikima Homes. 2017</p>
+            <p>All Rights Reserved</p>
+          </div>
+      </div>
       </app-header-layout>
     </app-drawer-layout>
   </template>
@@ -197,7 +236,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         searchCriterionName: String,
         listingsCategory: Object,
         failure: Boolean,
-        detailObj: Object
+        detailObj: Object,
+        hideFooter: Boolean,
       },
 
       listeners: {
@@ -230,6 +270,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _routePageChanged: function(page) {
         console.log(page)
         this.page = page || 'home';
+
+        if (this.page == 'detail') {
+          this.set('hideFooter', true);
+        } else {
+          this.set('hideFooter', false);          
+        }
 
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();

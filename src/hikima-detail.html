@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="shared-styles.html">
 
-<link rel="import" href="hikima-icons.html">
+ <link rel="import" href="hikima-icons.html">
 
 <dom-module id="hikima-detail">
   <template>
@@ -38,12 +38,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /***** css created content items *****/
 
       .reasons {
-        border-top: 1px solid #757575;
-        border-bottom: 1px solid #757575;        
+        border-top: 1px solid var(--divider-color);
+        border-bottom: 1px solid var(--divider-color);        
       }
 
      .listing-detail {
-       background-color: white;
+       background-color: var(--text-primary-color);
         border-top-left-radius: 9px;
        border-top-right-radius: 9px;
      }      
@@ -61,6 +61,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        .summary .bedrooms,
        .summary .price {
          font-size: 16px;
+       }
+
+       .summary .price {
+         color: var(--accent-color);
        }
 
        .reasons li {
@@ -88,12 +92,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          margin-top: -10%;
          margin-left: 5%;
          width: 90%;
-         box-shadow: 5px 5px 35px #757575;
+         box-shadow: 5px 5px 35px var(--secondary-text-color);
          }
 
         paper-icon-button  {
          --paper-icon-button: {
-           background-color: #333333;
+           background-color: var(--accent-color);
+           color: var(--text-primary-color);
            border-radius: 100%;
            z-index: 5;
          };
