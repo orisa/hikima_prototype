@@ -62,17 +62,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           searchCriterionName: {
             type: String,
-            observer: 'getSearchData',
           },
+
+          query: String,
 
           page: String,
                    
         },
 
+        observers: [
+          'getSearchResults(query, searchCriterionName)',
+        ],
 
-        getSearchData: function(criterionName) {
-            if (criterionName) {
-              this._fetchAllItems(criterionName, 1);
+        getSearchResults: function(query, criterionName) {
+            if (query && criterionName) {
+              this._fetchSearchResults(query, criterionName, 1);
             }
         },
          
@@ -136,7 +140,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       this._fetchItemDetail(categoryName, itemName, 1);
                       //this.set('categoryObj', obj);
                     }
-                }  
+                // } else if (this.page == 'search') {
+                //    const query = pathNames[0];
+                //    console.log(query);
+                //    if (query) {
+                //      this._fetchSearchResults(query, 'all', 1)
+                //    } 
+                 }  
             }
           
         },
@@ -188,8 +198,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   url: '/data/' + criterionName + '.json',
                   onLoad: function(e) {
                     const response = JSON.parse(e.target.responseText);
-                    this.searchListings(query, response);
-                   // this.fire('search-results-ready',  {searchResults,failure: false})
+                    const searchResults = this.searchListings(query, response);
+                    this.fire('search-results-ready',  {searchResults,failure: false})
                   },
                   onError: function(e) {
                     this.fire({ failure: true});
@@ -261,7 +271,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   }
                 }
 
-                console.dir(match_listings);
+                return match_listings;
           }
          
                 

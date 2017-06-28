@@ -42,6 +42,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-icon-button-ink-color: white;
       }
 
+       
+       
+         #searchinput {
+          height: 1.5em;
+          border-radius: 5px;
+          font-size: 1em;
+          background-color: white;
+          color: #757575;
+          outline: none;
+          padding: 2px 5px;
+          width: 100%;
+          /*display: none;*/
+       }
+
+       .hide {
+         display: none;
+       }
+
+       .searchSignifier {
+          color: red;
+       }
+
+         #searchinput::-webkit-input-placeholder {
+            color: #757575;
+            letter-spacing: .5px;
+            font-style: italic;
+         }
+
       .drawer-list {
         margin: 0 20px;
       }
@@ -62,6 +90,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .logo a {
         pointer-events: auto;
       }
+
+      app-toolbar paper-icon-button {
+        color: white;
+      }
     </style>
 
     <!-- loads all categories of houses available for display in home view i.e loads data for a given subroute -->
@@ -69,19 +101,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <app-location route="{{route}}"></app-location>
     <app-route
+        id="ar"
         route="{{route}}"
         pattern="/:page"
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
     
     <hikima-category-data categories="{{categories}}"
-                          search-criterion-name="{{searchCriterionName}}" 
+                          search-criterion-name="[[searchCriterionName]]" 
+                          query="[[query]]"
                           subroute="[[subroute]]" page="[[page]]"></hikima-category-data>
     
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
       <app-drawer id="drawer">
-        <app-toolbar>Categories</app-toolbar>
+        <app-toolbar>Categories
+        </app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <template is="dom-repeat" items="[[categories]]" as="category">
               <a name="[[category.name]]" href="/list/[[category.name]]">[[category.title]]</a>            
@@ -96,6 +131,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <app-toolbar>
             <paper-icon-button icon="hikima-icons:menu"  aria-label="categories" drawer-toggle></paper-icon-button>
             <div class="logo" main-title><a href="/" aria-label="HIKIMA Homes">Hikima Homes</a></div>
+            <a on-tap="_enableSearchMode" tabindex="-1">
+              <paper-icon-button id="searchBtn" icon="hikima-icons:search"></paper-icon-button>
+          </a> 
+          </app-toolbar>
+          <app-toolbar id="searchToolbar" class="hide">
+           
+              <input type="search" id="searchinput" 
+                        value="{{searchInput::input}}"
+                        placeholder="Search"
+                        name="userinput" on-keyup="_onKeyUp">
+          
           </app-toolbar>
         </app-header>
 
@@ -108,8 +154,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <hikima-list name="list" 
                         listings-category="[[listingsCategory]]"
                         failure="[[failure]]"></hikima-list>
-          <hikima-detail name="detail" detail-obj="[[detailObj]]"></hikima-detail>
-          <hikima-search></hikima-search>          
+          <hikima-detail name="detail" 
+          detail-obj="[[detailObj]]"
+           failure="[[failure]]"></hikima-detail>
+          <hikima-search name="search" search-results="[[searchResults]]" failure="[[failure]]"></hikima-search>          
           <hikima-view404 name="view404"></hikima-view404>
         </iron-pages>
       </app-header-layout>
@@ -128,7 +176,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
         categories: Array,
-        query: String,
+        query: {
+          type: String,
+         },
+
+         searchInput: String,
+
+        subroute: {
+          type: Object,
+          observer: '_subrouteChanged'
+        },
+
         searchResults: Array,
         searchCriterionName: String,
         listingsCategory: Object,
@@ -139,7 +197,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       listeners: {
         'items-ready': '_onItemsReady',
         'item-ready': '_onItemReady',
-        'all-items-ready': '_onAllItemsReady'
+         'search-results-ready': '_onSearchResultsReady'
        },
 
       observers: [
@@ -148,14 +206,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _onKeyUp: function(e) {
-        this.set('searchCriterionName', 'all');
+        if (e.keyCode == 13) {
+              console.log('searching...');
+             this.set('searchCriterionName', 'all');
+            let searchPath = ['/search', this.searchInput].join('/');
+            this.set('route.path', searchPath);
+        }
+        
+      },
+
+      _enableSearchMode: function() {
+        this.$.searchBtn.toggleClass('searchSignifier');
+        this.$.searchToolbar.toggleClass('hide');
+        //this.$.searchinput.focus = 'true';
       },
 
       _routePageChanged: function(page) {
+        console.log(page)
         this.page = page || 'home';
 
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
+        }
+      },
+
+      _subrouteChanged: function(subroute) {
+         if (subroute) {
+          const query = subroute.path ? subroute.path.substr(1) : '';
+          // console.log(query);
+          // console.log(this.query);          
+          //    this.set(query, '');
+          this.set('query', query);
         }
       },
 
@@ -182,13 +263,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          }
         this.set('failure', e.detail.failure);
       },
-      
-      _onAllItemsReady: function(e) {
-         if (!e.detail.failure) {
-           this.set('searchResults', e.detail.items);
-           this.set('query', 'suda house');
-         }
+
+      _onSearchResultsReady: function(e) {
+        if (!e.detail.failure) {
+            this.set('searchResults', e.detail.searchResults);
+        }
         this.set('failure', e.detail.failure);
+        this._enableSearchMode();  
+        this.set('searchInput', '');      
       }
 
       
