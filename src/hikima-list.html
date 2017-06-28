@@ -38,6 +38,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         box-sizing: border-box;
       }
 
+       h3 {
+         text-align: center;
+         margin: 1% 0;
+       }
+
+       h3 + p{
+         font-size: 16px;
+         color: #757575;
+          text-align: center;
+       }
+
       .listing-link {
         text-decoration: none;
       }
@@ -95,6 +106,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
      
     </style>
+    <h3>[[listingsCategory.title]]</h3>
+    <p>[[numListings]]&nbsp;Listings(s)</p>
     <div hidden$="[[failure]]">
          <template is="dom-repeat" items="[[listingsCategory.items]]" as="listing">
             <a href$="/detail/[[listing.category]]/[[listing.name]]" class="listing-link">
@@ -111,8 +124,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          </template>
     </div>
    
-    <p></p>
-  </template>
+   </template>
 
   <script>
     Polymer({
@@ -121,6 +133,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         listingsCategory: Object,
         failure: Boolean,
+
+        numListings: {
+          type: Number,
+          computed: '_computeNumListings(listingsCategory.items.splices)',
+        }
+      },
+
+      _computeNumListings: function() {
+        if (this.listingsCategory) {
+          console.log(this.listingsCategory.items.length);
+           return this.listingsCategory.items.length;
+        }
       }
     });
   </script>
