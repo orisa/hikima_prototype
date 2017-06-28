@@ -9,6 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+<link rel="import" href="hikima-icons.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="hikima-home">
@@ -16,24 +20,83 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
       :host {
         display: block;
+        letter-spacing: 1px;
+       }
 
-        padding: 10px;
+       *{
+         margin: 0;
+         padding: 0;
+         outline: none;
+       }
+
+      .hero {
+        background-image: url('data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAeAAD/7gAOQWRvYmUAZMAAAAAB/9sAhAAQCwsLDAsQDAwQFw8NDxcbFBAQFBsfFxcXFxcfHhcaGhoaFx4eIyUnJSMeLy8zMy8vQEBAQEBAQEBAQEBAQEBAAREPDxETERUSEhUUERQRFBoUFhYUGiYaGhwaGiYwIx4eHh4jMCsuJycnLis1NTAwNTVAQD9AQEBAQEBAQEBAQED/wAARCAADAA4DASIAAhEBAxEB/8QAXwABAQEAAAAAAAAAAAAAAAAAAAMFAQEBAAAAAAAAAAAAAAAAAAABAhAAAQIDCQAAAAAAAAAAAAAAEQABITETYZECEjJCAzMVEQACAwAAAAAAAAAAAAAAAAAAATFBgf/aAAwDAQACEQMRAD8AzeADAZiFc5J7BC9Scek3VrtooilSNaf/2Q==');
+        background-color: gray;
+        position: relative;
+        background-size: cover;
       }
 
-      .img-blk {
-        background-image: url('data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAeAAD/7gAOQWRvYmUAZMAAAAAB/9sAhAAQCwsLDAsQDAwQFw8NDxcbFBAQFBsfFxcXFxcfHhcaGhoaFx4eIyUnJSMeLy8zMy8vQEBAQEBAQEBAQEBAQEBAAREPDxETERUSEhUUERQRFBoUFhYUGiYaGhwaGiYwIx4eHh4jMCsuJycnLis1NTAwNTVAQD9AQEBAQEBAQEBAQED/wAARCAADAA4DASIAAhEBAxEB/8QAXwABAQEAAAAAAAAAAAAAAAAAAAMFAQEBAAAAAAAAAAAAAAAAAAABAhAAAQIDCQAAAAAAAAAAAAAAEQABITETYZECEjJCAzMVEQACAwAAAAAAAAAAAAAAAAAAATFBgf/aAAwDAQACEQMRAD8AzeADAZiFc5J7BC9Scek3VrtooilSNaf/2Q==');
-        background-color: tomato;
+      .hero img {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .lines {
+        text-align: center;
+        position: absolute;
+        top: 38vh;
+        left: 5%;
+        right: 5%;
+      }
+
+      .headline {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .tagline {
+        font-size: 20px;
+        font-weight: 500;
+      }
+
+      .socialContent {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 16px;
+      }
+      
+      .footer {
+          padding: 16px 0;
+      }
+      .footerInfo {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .footerInfo p {
+        margin-bottom: 1vh;
       }
     </style>
-
-    <div class="card">
-      <div class="circle">1</div>
-      <h1>Home</h1>
-      <p>Ut labores minimum atomorum pro. Laudem tibique ut has.</p>
-      <p>Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Lorem ipsum dolor sit amet, per in nusquam nominavi periculis, sit elit oportere ea.Cu mei vide viris gloriatur, at populo eripuit sit.</p>
-      <div class="img-blk">
-        some image
-        <img id="img" on-load="_onLoadImg" alt="home image">
+       
+    <div class="hero">
+       <img src="../images/hikima_home_crop.jpg" alt="Landing Page Photo">
+        <div class="lines">
+          <p class="headline">Welcome To Sokoto</p>
+          <p class="tagline">Need An Accomodation? We've Got You Covered</p>      
+       </div>
+    </div>
+    <div class="footer">
+      <div class="socialContent">
+        <paper-icon-button icon="hikima-icons:textsms"></paper-icon-button>
+        <paper-icon-button icon="hikima-icons:textsms"></paper-icon-button>
+        <paper-icon-button icon="hikima-icons:textsms"></paper-icon-button>
+        <paper-icon-button icon="hikima-icons:textsms"></paper-icon-button>                        
+      </div>
+      <div class="footerInfo">
+        <p>About</p>
+        <p>Copyright. Hikima Homes. 2017</p>
+        <p>All Rights Reserved</p>
       </div>
     </div>
   </template>
