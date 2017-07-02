@@ -82,7 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         getSearchResults: function(query, criterionName) {
             if (query && criterionName) {
-              this._fetchSearchResults(query, criterionName, 1);
+              this._fetchSearchResults(query, criterionName, 3);
             }
         },
          
@@ -135,7 +135,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     if (categoryName) {
                       const categoryObj = this._getCategoryObject(categoryName);
                       if (categoryObj)
-                         this._fetchItems(categoryObj, 1);
+                         this._fetchItems(categoryObj, 3);
                       else {
                         console.log('cannot find category with name' + categoryName);
                       }
@@ -148,7 +148,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                    //console.log(categoryName);
                    //console.log(itemName);                   
                     if (categoryName) {
-                      this._fetchItemDetail(categoryName, itemName, 1);
+                      this._fetchItemDetail(categoryName, itemName, 3);
                       //this.set('categoryObj', obj);
                     }
                 // } else if (this.page == 'search') {

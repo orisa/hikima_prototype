@@ -1,4 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="hikima-search">
@@ -88,7 +91,7 @@
           <h3>Search Results for <span class="query">[[query]]</span></h3>
           <p>[[numListings]]&nbsp;Listings(s)</p>
        </div> 
-      <div hidden="[[failure]]" id="searchResults">
+       <div hidden="[[failure]]" id="searchResults">
           <template is="dom-repeat" items="[[searchResults]]" as="listing">
              <a href$="/detail/[[listing.category]]/[[listing.name]]" class="listing-link">
                 <div class="card">
