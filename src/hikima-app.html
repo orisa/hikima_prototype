@@ -121,6 +121,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-weight: 500;
       }
 
+      .footer paper-icon-button {
+        --paper-icon-button: {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
       .footerInfo p {
         margin-bottom: 1vh;
       }
@@ -160,7 +167,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header role="navigation" condenses reveals effects="waterfall">
           <app-toolbar>
             <paper-icon-button icon="hikima-icons:menu"  aria-label="categories" drawer-toggle></paper-icon-button>
-            <div class="logo" main-title><a href="/" aria-label="HIKIMA Homes">Hikima Homes</a></div>
+            <div class="logo" main-title><a href="/" aria-label="HIKIMA Homes">Victory Homes</a></div>
             <a on-tap="_enableSearchMode" tabindex="-1">
               <paper-icon-button id="searchBtn" icon="hikima-icons:search"></paper-icon-button>
           </a> 
@@ -194,10 +201,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </iron-pages>
         <div class="footer" hidden$="[[hideFooter]]">
           <div class="socialContent">
-            <paper-icon-button icon="hikima-icons:textsms"></paper-icon-button>
-            <paper-icon-button icon="hikima-icons:textsms"></paper-icon-button>
-            <paper-icon-button icon="hikima-icons:textsms"></paper-icon-button>
-            <paper-icon-button icon="hikima-icons:textsms"></paper-icon-button>                        
+            <paper-icon-button src="../images/whatsapp_black.svg"></paper-icon-button>
+            <paper-icon-button src="../images/fb_black.svg"></paper-icon-button>
+            <paper-icon-button src="../images/fb_black.svg"></paper-icon-button>
+            <paper-icon-button src="../images/whatsapp_black.svg"></paper-icon-button>                        
           </div>
           <div class="footerInfo">
             <p>About</p>
@@ -268,8 +275,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _routePageChanged: function(page) {
-        console.log(page)
-        this.page = page || 'home';
+         this.page = page || 'home';
 
         if (this.page == 'detail') {
           this.set('hideFooter', true);
@@ -307,7 +313,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            this.set('listingsCategory', e.detail.categoryObj);
         }  
         this.set('failure', e.detail.failure);
-      },
+       },
 
       _onItemReady: function(e) {
         if (!e.detail.failure) {

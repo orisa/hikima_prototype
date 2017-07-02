@@ -1,0 +1,91 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
+    <title>my-view1</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+    <script src="../bower_components/test-fixture/test-fixture-mocha.js"></script>
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../src/hikima-category-data.html">
+  </head>
+  <body>
+    <test-fixture id="basic">
+      <template>
+        <hikima-category-data></hikima-category-data>
+      </template>
+    </test-fixture>
+
+    <script>
+    //   suite('hikima-category-data tests', function() {
+    //     var data;
+
+    //     setup(function() {
+    //       data = fixture('basic');
+    //     });
+
+    //     test('items in the bungalows category should be 2', function() {
+    //       data._fetchItems({name: 'bungalows'}, 1);
+    //       //console.dir(data.getAttribute('items'));
+    //       assert.equal(data.getItems.length, 2);
+    //     });
+
+    //     test('category object with name bungalows should be returned', function() {
+    //       const categoryObj = data._getCategoryObject('bungalows');
+    //        assert.equal(categoryObj.name, 'bungalows');
+    //     });
+    //   });
+
+
+        describe('just a basic test', function() {
+            let data = fixture('basic');
+          it('should return a category with the name provived', function() {
+                let categoryName = 'single_rooms';
+                const categoryObj = data._getCategoryObject(categoryName);
+                expect(categoryObj.name).to.be.equal(categoryName);
+             })
+        });
+
+        describe.skip('computing a category object', function() {
+            const data = fixture('basic')
+            const category = {name: 'bungalows'};
+            it('should fetch all listings for a given category', function(done){
+              data._fetchItems(category, 1, function(err) {
+                if (err) {
+                  done(err);
+                } else {
+                  done();
+                }
+              })
+              expect(data.items.length).to.be.equal(2);
+            });
+        });
+
+        describe.only('when subroute changes', function() {
+          describe('_computePathNames()', function() {    
+            let pathNames = '';
+            let data = fixture('basic');  
+            it('should compute the pathnames in the subroute path', function() {
+              const path = '/one_room_self_contain/Suda+House';
+              pathNames = data._computePathNames(path);
+              expect(pathNames.length).to.be.equal(2);
+            })
+          });
+        })
+    </script>
+  </body>
+</html>

@@ -53,8 +53,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           items: {
             type: Array,
-            observer: '_showItems',
+            // observer: '_showItems',
           },
+
+          pathNames: Array,
 
           categoryObj: {
             type: Object,
@@ -73,6 +75,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         observers: [
           'getSearchResults(query, searchCriterionName)',
         ],
+
+        getItems: function() {
+          return this.items;
+        },
 
         getSearchResults: function(query, criterionName) {
             if (query && criterionName) {
@@ -119,7 +125,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         _subrouteChanged: function(subroute) {
           let pathNames = [];
           if (subroute.path) {
-               pathNames = this._computePathNames(subroute.path);                
+               pathNames = this._computePathNames(subroute.path); 
+               this.pathNames = pathNames;               
           }
             if (pathNames.length != 0) {
                 if (this.page == 'list') {
@@ -127,7 +134,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     console.log(categoryName);
                     if (categoryName) {
                       const categoryObj = this._getCategoryObject(categoryName);
-                      this._fetchItems(categoryObj, 1);
+                      if (categoryObj)
+                         this._fetchItems(categoryObj, 1);
+                      else {
+                        console.log('cannot find category with name' + categoryName);
+                      }
                       //this.set('categoryObj', obj);
                     }
                 } else if (this.page == 'detail') {
@@ -211,16 +222,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         _fetchItems: function(categoryObj, attempts) {
          // Only fetch the items of a category if it has not been previously set.
        
-         if (!categoryObj || categoryObj.items) {
-           return;
-         }
+        //  if (!categoryObj || categoryObj.items) {
+        //    return;
+        //  }
 
          this._getResource({
           url: '/data/' + categoryObj.name + '.json',
           onLoad: function(e) {
             //this.set('items', JSON.parse(e.target.responseText));
             categoryObj.items = JSON.parse(e.target.responseText);
-            this.fire('items-ready',  {categoryObj, failure: false})
+            this.items = categoryObj.items;
+            console.dir(this.items);
+             this.fire('items-ready',  {categoryObj, failure: false})
            },
           onError: function(e) {
              this.fire({ failure: true});

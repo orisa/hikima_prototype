@@ -8,7 +8,8 @@
         display: block;
 
         padding: 10px;
-      }
+
+       }
 
       *{
         padding: 0;
@@ -31,7 +32,8 @@
         text-decoration: none;
       }
 
-      
+      #searchResults {
+       }
 
       .card {
         letter-spacing: 1px;
@@ -86,7 +88,7 @@
           <h3>Search Results for <span class="query">[[query]]</span></h3>
           <p>[[numListings]]&nbsp;Listings(s)</p>
        </div> 
-      <div hidden="[[failure]]">
+      <div hidden="[[failure]]" id="searchResults">
           <template is="dom-repeat" items="[[searchResults]]" as="listing">
              <a href$="/detail/[[listing.category]]/[[listing.name]]" class="listing-link">
                 <div class="card">

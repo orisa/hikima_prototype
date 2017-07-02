@@ -1,19 +1,27 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
+  "shell": "src/hikima-app.html",
   "fragments": [
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html",
-    "src/my-view404.html"
+    "src/hikima-category-data.html",
+    "src/hikima-detail.html",
+    "src/hikima-home.html",
+    "src/hikima-icons.html",
+    "src/hikima-list.html",
+    "src/hikima-search.html", 
+    "src/hikima-theme.html",
+    "src/hikima-view404.html",
+    "src/shared-styles.html"
   ],
-  "sourceGlobs": [
+  "sources": [
     "src/**/*",
     "images/**/*",
     "bower.json"
   ],
-  "includeDependencies": [
+  "extraDependencies": [
     "manifest.json",
     "bower_components/webcomponentsjs/webcomponents-lite.min.js"
-  ]
+  ],
+  "builds": [{
+  "preset": "es6-bundled"
+ }]
 }
