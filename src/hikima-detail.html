@@ -10,7 +10,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="shared-styles.html">
 
  <link rel="import" href="hikima-icons.html">
@@ -141,12 +140,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              padding: 0 6%;
         }
 
-        .toast {
-          width: 100%;
-          margin: 0 auto;
-          text-align: center;
-          margin: 0 calc((100% - 288px)/2);
-        }
+       
        
     </style>
       <div hidden$="[[failure]]">
@@ -192,7 +186,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
           </div>
       </div>
-      <paper-toast class="toast" opened="[[failure]]" text="Network Error! Try Again Later"></paper-toast>        
        
   </template>
 
