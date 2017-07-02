@@ -1,6 +1,6 @@
 {
-  "name": "Victory App",
-  "short_name": "Victory App",
+  "name": "Hikima App",
+  "short_name": "Hikima App",
   "start_url": "/?homescreen=1",
   "display": "standalone",
   "theme_color": "#388E3C",
