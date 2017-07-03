@@ -329,7 +329,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (!e.detail.failure) {
            this.set('detailObj', e.detail.detailObj);
          }
-        this.set('failure', true);
+        this.set('failure',  e.detail.failure);
       },
 
       _onSearchResultsReady: function(e) {

@@ -17,6 +17,22 @@
         "reason_4": "Security"   
     },
 
+     {   
+        "bedrooms": 3,        
+        "name": "ibro+house",
+        "title": "ibro house",
+        "LGA": "Bello Way",
+        "status": "Available",
+        "region": "Sokoto West",
+        "category": "Bungalows",
+        "description": "Located in along trade fair road, this one room self contain is comfortable and affordable",
+        "image": "/data/images/demo_house.jpg",
+        "reason_1": "Power Supply",
+        "reason_2": "Market Proximity",
+        "reason_3": "Water",
+        "reason_4": "Security" 
+    },
+
     {   
         "bedrooms": 3,        
         "name": "seriki+house",
