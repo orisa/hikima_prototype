@@ -130,8 +130,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             if (pathNames.length != 0) {
                 if (this.page == 'list') {
                     const categoryName = pathNames[0];
-                    console.log(categoryName);
-                    if (categoryName) {
+                     if (categoryName) {
                       const categoryObj = this._getCategoryObject(categoryName);
                       if (categoryObj)
                          this._fetchItems(categoryObj, 3);
@@ -141,8 +140,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       //this.set('categoryObj', obj);
                     }
                 } else if (this.page == 'detail') {
-                  console.log("In detail page");
-                   const categoryName = pathNames[0];
+                    const categoryName = pathNames[0];
                    const itemName = pathNames[1];                   
                    //console.log(categoryName);
                    //console.log(itemName);                   
@@ -193,7 +191,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     //this.set('items', JSON.parse(e.target.responseText));
                     const items = JSON.parse(e.target.responseText);
                     const detailObj = this._computeItem(itemName, items);
-                    this.fire('item-ready',  {detailObj,failure: false})
+                    this.fire('item-ready',  {item: detailObj,failure: false})
                   },
                   onError: function(e) {
                     this.fire({ failure: true});
@@ -231,8 +229,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             //this.set('items', JSON.parse(e.target.responseText));
             categoryObj.items = JSON.parse(e.target.responseText);
             this.items = categoryObj.items;
-            console.dir(this.items);
-             this.fire('items-ready',  {categoryObj, failure: false})
+            this.fire('items-ready',  {categoryObj, failure: false})
            },
           onError: function(e) {
              this.fire({ failure: true});
