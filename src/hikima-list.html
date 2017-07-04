@@ -143,14 +143,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         numListings: {
           type: Number,
           computed: '_computeNumListings(listingsCategory.items.splices)',
-        }
+        },
       },
 
       _computeNumListings: function() {
         if (this.listingsCategory) {
             return this.listingsCategory.items.length;
         }
-      }
+      },
+      
     });
   </script>
 </dom-module>
