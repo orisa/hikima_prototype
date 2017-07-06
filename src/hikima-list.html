@@ -52,6 +52,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .listing-link {
         text-decoration: none;
+        pointer-events: all;
+      }
+
+      .feedback {
+        background-color: tomato;
       }
 
       
@@ -113,8 +118,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <p>[[numListings]]&nbsp;Listings(s)</p>
     </div> 
     <div hidden$="[[failure]]">
-         <template is="dom-repeat" items="[[listingsCategory.items]]" as="listing">
-            <a href$="/detail/[[listing.category]]/[[listing.name]]" class="listing-link">
+         <template is="dom-repeat" items="[[listingsCategory.items]]" 
+                   as="listing">
+            <a href$="/detail/[[listing.category]]/[[listing.name]]" 
+               class="listing-link"
+               on-touch="_showFeedback">
                 <div class="card">
                   <div class="text-info">
                     <p class="title">[[listing.title]]</p>
@@ -151,7 +159,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             return this.listingsCategory.items.length;
         }
       },
+      _showFeedback: function(e) {
+        // let listingItem = e.target;
+        // if (!listingItem.classList.contains('feedback')) {
+        //     listingItem.classList.add('feedback');
+        // }
+      }
       
     });
   </script>
 </dom-module>
+Hi. Aunt Yemisi. How are u? I'm Akin from Nigeria. You and Uncle James used to b friends with my mum Diane Efua Orisajobi.o To refresh ur memories, I and my sister and Kenny, used to spend holidays with u, uncle James, Temilu, Dele and Anita in Railway Compound. My mum is currently in the U.k and she has missied u guys so much but she can't reach u. She wud love to talk to u.She wud b so happy if you cud reach out  to 
+her on phone cos she is not on on any social media.Her T-Mobile number is 07944471201.
